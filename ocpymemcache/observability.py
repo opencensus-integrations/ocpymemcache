@@ -14,8 +14,9 @@
 
 import time
 
+from opencensus.trace import execution_context
 from opencensus.trace.status import Status
-from opencensus.trace.tracer import Tracer
+from opencensus.trace.tracer import noop_tracer
 
 from opencensus.stats import stats
 from opencensus.stats import aggregation as aggregation_module
@@ -42,8 +43,8 @@ def enable_metrics_views():
         [key_method, key_error, key_status],
         m_latency_ms,
         aggregation_module.DistributionAggregation([
-	    # Latency in buckets:
-	    # [>=0ms, >=5ms, >=10ms, >=25ms, >=40ms, >=50ms, >=75ms, >=100ms, >=200ms, >=400ms, >=600ms, >=800ms, >=1s, >=2s, >=4s, >=6s, >=10s, >-20s]
+            # Latency in buckets:
+            # [>=0ms, >=5ms, >=10ms, >=25ms, >=40ms, >=50ms, >=75ms, >=100ms, >=200ms, >=400ms, >=600ms, >=800ms, >=1s, >=2s, >=4s, >=6s, >=10s, >-20s]
             0, 5, 10, 25, 40, 50, 75, 100, 200, 400, 600, 800, 1000, 2000, 4000, 6000, 10000, 20000
         ]))
 
@@ -52,20 +53,20 @@ def enable_metrics_views():
     view_manager.register_view(latency_view)
 
 class TrackingOperation(object):
-    __TRACER = Tracer()
-    __STATS_RECORDER = stats.Stats().stats_recorder
-
     def __init__(self):
         pass
 
     def trace_and_record_stats(self, method_name, fn, *args, **kwargs):
+        __TRACER = execution_context.get_opencensus_tracer() or noop_tracer.NoopTracer()
+        __STATS_RECORDER = stats.Stats().stats_recorder
+
         start_time = time.time()
 
         tags = tag_map_module.TagMap()
         tags.insert(key_method, tag_value_module.TagValue(method_name))
-        mm = self.__STATS_RECORDER.new_measurement_map()
+        mm = __STATS_RECORDER.new_measurement_map()
 
-        with self.__TRACER.span(name=method_name) as span:
+        with __TRACER.span(name=method_name) as span:
             try:
                 return fn(*args, **kwargs)
             except Exception as e: # an error to record

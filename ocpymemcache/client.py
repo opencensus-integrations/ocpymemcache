@@ -58,10 +58,15 @@ class OCPyMemcacheClient(object):
                 'pymemcache.client.base.Client.decr',
                 self.__pymc.decr, key, value, *args, **kwargs)
 
+    def delete(self, key, *args, **kwargs):
+        return self.__TRACKING_OPERATION.trace_and_record_stats(
+                'pymemcache.client.base.Client.delete',
+                self.__pymc.delete, key, *args, **kwargs)
+
     def delete_many(self, keys, *args, **kwargs):
         return self.__TRACKING_OPERATION.trace_and_record_stats(
                 'pymemcache.client.base.Client.delete_many',
-                self.__pymc.delete_many, key, *args, **kwargs)
+                self.__pymc.delete_many, keys, *args, **kwargs)
 
     def delete_multi(self, keys, *args, **kwargs):
         return self.__TRACKING_OPERATION.trace_and_record_stats(
