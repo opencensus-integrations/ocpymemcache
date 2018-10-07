@@ -24,7 +24,7 @@ install_requires = [
 
 setup(
     name='ocpymemcache',
-    version='0.0.2',
+    version='0.0.3',
     author='OpenCensus Authors',
     author_email='census-developers@googlegroups.com',
     classifiers=[
@@ -42,7 +42,7 @@ setup(
     ],
     description='A wrapper for PyMemcache, instrumented using OpenCensus for distributed tracing and metrics',
     include_package_data=True,
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     install_requires=install_requires,
     license='Apache-2.0',
     packages=find_packages(),
