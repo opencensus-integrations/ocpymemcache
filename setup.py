@@ -24,7 +24,7 @@ install_requires = [
 
 setup(
     name='ocpymemcache',
-    version='0.0.1',
+    version='0.0.2',
     author='OpenCensus Authors',
     author_email='census-developers@googlegroups.com',
     classifiers=[
