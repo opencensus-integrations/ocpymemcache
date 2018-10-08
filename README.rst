@@ -14,7 +14,7 @@ The mettrics recorded include:
    :widths: 20, 20, 20, 20
 
    "Latency", "pymemcache/latency", "ms", "'error', 'method', 'status'"
-   "Calls", "pymemcache/calls". "1", "'error', 'method', 'status'"
+   "Calls", "pymemcache/calls", "1", "'error', 'method', 'status'"
 
 Installing it
 -------------
