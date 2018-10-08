@@ -9,14 +9,12 @@ The mettrics recorded include:
 - calls
 - latency in milliseconds
 
+.. csv-table::
+   :header: "Metric", "View Name", "Unit", "Tags"
+   :widths: 20, 20, 20, 20
 
-+----------+----------------------+------+-----------------------------+
-|Metric    |     View name        | Unit |             Tags            |
-+==========+======================+======+=============================+
-Latency    |"pymemcache/latency"  | "ms" |"error", "method", "status"  |
-+----------+----------------------+------+-----------------------------+
-|Calls     |"pymemcache/calls"    | "1"  |"error", "method", "status"  |
-+----------+----------------------+------+-----------------------------+
+   "Latency", "pymemcache/latency", "ms", "'error', 'method', 'status'"
+   "Calls", "pymemcache/calls", "1", "'error', 'method', 'status'"
 
 Installing it
 -------------
